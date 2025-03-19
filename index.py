@@ -11,6 +11,10 @@ line_bot_api = LineBotApi('A3oUVaheUYgSpV+93g917AU5KASih9MdlVuEfQkJe1ZSC7WoPKvyF
 handler = WebhookHandler('6915f096ed9dea708c9c95f60e12f011')
 
 @app.route("/callback", methods=['POST'])
+@app.route("/", methods=['GET'])
+def home():
+    return "Welcome to the home page!"
+
 def callback():
     # 確認請求來自 LINE
     signature = request.headers['X-Line-Signature']
