@@ -10,7 +10,7 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('A3oUVaheUYgSpV+93g917AU5KASih9MdlVuEfQkJe1ZSC7WoPKvyFixZKawt/VSYUbDZDUmUMOrjUWZKjxXcyzMhwVDorisEegf7qwgGZyZgWS2aSvSTcKVbO8nx9s3xYhr2+3dPr8YyNWXi6FJEEAdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('6915f096ed9dea708c9c95f60e12f011')
 
-@app.route("/callback", methods=['POST'])
+@app.route("/callback", methods=['GET'])
 @app.route("/", methods=['GET'])
 def home():
     return "Welcome to the home page!"
