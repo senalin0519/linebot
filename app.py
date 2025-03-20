@@ -1,8 +1,10 @@
 import os
-from flask import Flask, request, abort
+import logging
+from flask import Flask, request, abort, send_from_directory
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
 
 app = Flask(__name__)
 
@@ -12,8 +14,24 @@ handler = WebhookHandler('6915f096ed9dea708c9c95f60e12f011')
 
 @app.route("/callback", methods=['POST'])
 @app.route("/", methods=['GET'])
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico')
 def home():
     return "Welcome to the home page!"
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    user_message = event.message.text
+    try:
+        response = line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"你說了: {user_message}")
+        )
+        logging.info(f"Response: {response}")
+    except Exception as e:
+        logging.error(f"Error: {e}")
+
 
 def callback():
     # 確認請求來自 LINE
@@ -36,5 +54,5 @@ def handle_message(event):
     )
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host='0.0.0.0', port=port)
