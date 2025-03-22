@@ -18,7 +18,7 @@ handler = WebhookHandler('6915f096ed9dea708c9c95f60e12f011')
 def favicon():
     return send_from_directory(app.static_folder, 'favicon.ico')
 def home():
-    return "Welcome to the home page!"
+    return "Welcome to the home page! 我是git"
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
